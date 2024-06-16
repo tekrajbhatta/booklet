@@ -60,4 +60,4 @@ Thanks to all contributors and users for their support and feedback.
 
 ## Contact
 
-If you have any questions, feel free to open an issue or contact us at [your-email@example.com](mailto:your-email@example.com).
+If you have any questions, feel free to open an issue or contact us at [tekbhatt1@gmail.com](mailto:tekbhatt1@gmail.com).
