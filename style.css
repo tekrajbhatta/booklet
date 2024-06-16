@@ -1,0 +1,321 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font: clamp(0.9rem, 1.5vw, 0.98rem)/1.44 Georgia, serif;
+    background-color: hsl(25, 100%, 92%);
+    color: hsl(25, 50%, 5%);
+}
+
+body {
+    width: min(90rem, 100%);
+    margin: 0 auto;
+    padding: 1em 0.8em;
+    overflow-x: hidden;
+}
+
+/* ************************** BOOK MOBILE DISPLAY ********************* */
+.bookmat {
+    box-sizing: content-box;
+    position: relative;
+}
+
+.preface {
+    margin: 2em 0.3rem;
+    font: 0.9em/1.44 Georgia, serif;
+}
+
+.book {
+    position: relative;
+    font: 0.8em/1.2 Georgia, serif;
+    background-color: hsl(20, 50%, 95%);
+    box-shadow: 0 0.5em 20px rgba(0, 0, 0, 0.3);
+}
+
+.book::before {
+    content: '‹';
+    position: absolute;
+    padding: 0 0.4em 0.13em;
+    top: -0.07em;
+    right: -0.2em;
+    font-size: 12em;
+    line-height: 1;
+    color: hsla(20, 50%, 35%, 0.2);
+    transform: rotate(0deg);
+    transition: transform 0.5s;
+}
+
+.bookpage {
+    pointer-events: none;
+    color: hsl(20, 50%, 15%);
+    background-color: hsl(20, 50%, 95%);
+    padding: 0.4em;
+    margin-bottom: -2em;
+    line-height: 0;
+    opacity: 0;
+    transition: line-height 0.5s 0.6s, opacity 1s, margin-bottom 0.5s 0.6s;
+}
+
+.front.cover {
+    margin-bottom: 0;
+    line-height: 1.2;
+    opacity: 1;
+}
+
+.bookpage p,
+.bookpage footer {
+    padding: 0.3em 2em;
+    hyphens: auto;
+    text-align: justify;
+}
+
+.bookpage p {
+    pointer-events: none;
+}
+
+.bookpage .booktitle {
+    font-size: 2em;
+    text-align: left;
+}
+
+.pagetext::first-letter {
+    font-size: 2em;
+}
+
+.unrolled.book::before {
+    transform: rotate(-90deg);
+}
+
+.unrolled.book>.bookpage {
+    line-height: 1.2;
+    margin-bottom: 0;
+    opacity: 1;
+    transition: line-height 1s, opacity 0.5s 0.6s, margin-bottom 1s;
+}
+
+/* ************************** BOOK MOBILE RTL ********************* */
+.rtl .bookpage .booktitle {
+    text-align: right;
+}
+
+.rtl .book::before {
+    left: -0.2em;
+    right: auto;
+    transform: rotate(180deg);
+}
+
+.rtl .unrolled.book::before {
+    transform: rotate(270deg);
+}
+
+@media (min-width:700px) {
+
+    /* ************************** BOOK DESKTOP DISPLAY ********************* */
+    .bookmat {
+        display: flex;
+        align-items: center;
+        min-height: 30rem;
+    }
+
+    .preface {
+        width: 25%;
+        margin: 0 5%;
+        pointer-events: none;
+    }
+
+    .book {
+        counter-reset: pagecounter;
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 60%;
+        height: 90%;
+        perspective: 75rem;
+        /* transform: rotate(20deg) scale(0.5); */
+        /* transition: transform 1s 3s; */
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .opened.book {
+        transform: rotate(0);
+        transition: transform 3s;
+    }
+
+    .book::before {
+        content: none;
+    }
+
+    .bookpage {
+        counter-increment: pagecounter;
+        position: absolute;
+        top: 0.5em;
+        bottom: 0.5em;
+        margin: 0;
+        padding: 0;
+        width: 50%;
+        line-height: 1.2;
+        opacity: 1;
+        backface-visibility: hidden;
+        cursor: pointer;
+        user-select: none;
+        box-shadow: inset 3px 0px 20px rgba(0, 0, 0, 0.1);
+        transform-style: preserve-3d;
+        transition: transform 3s;
+    }
+
+    .back {
+        transform-origin: 100% 0;
+        transform: rotateY(180deg);
+        left: 0;
+    }
+
+    .front {
+        transform-origin: 0 0;
+        transform: rotateY(0deg);
+        right: 0;
+    }
+
+    .back.flipped {
+        transform: rotateY(0deg);
+    }
+
+    .front.flipped {
+        transform: rotateY(-180deg);
+    }
+
+    .clickable {
+        pointer-events: all;
+    }
+
+    .cover,
+    .lastpage {
+        top: 0;
+        bottom: 0;
+        width: calc(50% + 0.5em);
+        border-style: solid;
+        border-image: linear-gradient(220.55deg, #FFD439 0%, #FF7A00 100%);
+        border-image-slice: 1;
+    }
+
+    .front.cover {
+        pointer-events: all;
+        right: -0.5em;
+        border: none;
+        margin-left: -0.1em;
+        padding: 0.5em 0.25em;
+        color: #fff;
+        background: linear-gradient(220.55deg, #FFD439 0%, #FF7A00 100%);
+        box-shadow: inset 3em 0 hsl(0, 0%, 0%);
+        border-radius: 0 5px 5px 0;
+    }
+
+    .back.cover {
+        left: -0.5em;
+        border-width: 0.5em 0 0.5em 0.5em;
+        border-radius: 5px 0 0 5px;
+    }
+
+    .lastpage {
+        right: -0.5em;
+        border-width: 0.5em 0.5em 0.5em 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .bookpage .booktitle {
+        padding: 3em 0.5em 0.5em 2em;
+    }
+
+    .bookpage footer {
+        position: absolute;
+        bottom: 0;
+        margin: 4em 2em;
+        font-size: 0.9em;
+    }
+
+    .bookpage:nth-child(n+3)::before {
+        content: counter(pagecounter);
+        display: block;
+        padding: 1em 2em;
+    }
+
+    .bookpage:nth-child(odd)::before {
+        text-align: right;
+    }
+
+    /* ************************** BOOK DESKTOP RTL ********************* */
+    .bookmat.rtl {
+        flex-direction: row-reverse;
+    }
+
+    .rtl .preface {
+        text-align: right;
+    }
+
+    .rtl .book {
+        transform: rotate(-20deg) scale(0.5);
+    }
+
+    .rtl .opened.book {
+        transform: rotate(0);
+    }
+
+    .rtl .back {
+        transform-origin: 0 0;
+        transform: rotateY(-180deg);
+        left: auto;
+        right: 0;
+    }
+
+    .rtl .front {
+        transform-origin: 100% 0;
+        transform: rotateY(0deg);
+        left: 0;
+    }
+
+    .rtl .back.flipped {
+        transform: rotateY(0deg);
+    }
+
+    .rtl .front.flipped {
+        transform: rotateY(180deg);
+    }
+
+    .rtl .front.cover {
+        margin-right: -0.1em;
+        border-radius: 5px 0 0 5px;
+        box-shadow: inset -3em 0 hsl(0, 0%, 0%);
+    }
+
+    .rtl .lastpage {
+        left: -0.5em;
+        border-width: 0.5em 0 0.5em 0.5em;
+        border-radius: 5px 0 0 5px;
+    }
+
+    .rtl .back.cover {
+        left: auto;
+        right: -0.5em;
+        border-width: 0.5em 0.5em 0.5em 0;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .rtl .bookpage:nth-child(even)::before {
+        text-align: right;
+    }
+
+    .rtl .bookpage:nth-child(odd)::before {
+        text-align: left;
+    }
+
+    .rtl .bookpage .booktitle {
+        padding: 3em 1.5em 0 0;
+    }
+}
